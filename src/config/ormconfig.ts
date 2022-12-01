@@ -1,6 +1,7 @@
 import {DataSource} from "typeorm"
 import {config} from 'dotenv'
-import {UserEntity} from "../entities/user-entity";
+import {UserEntity} from "../users/entities/user-entity";
+import {TokenEntity} from "../users/entities/token-entity";
 
 config()
 export const AppDataSource = new DataSource({
@@ -10,7 +11,7 @@ export const AppDataSource = new DataSource({
     username: process.env.PG_USERNAME,
     password: process.env.PG_PASSWORD,
     database: process.env.PG_DATABASE,
-    entities: [UserEntity],
+    entities: [UserEntity,TokenEntity],
     synchronize: true,
 })
 AppDataSource.initialize()

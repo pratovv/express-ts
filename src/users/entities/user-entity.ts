@@ -7,5 +7,3 @@ export class UserEntity {
     @Column()
     password: string;
 }
-
-export default UserEntity;
