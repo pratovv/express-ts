@@ -12,9 +12,10 @@ class FilesController {
             next(e)
         }
     }
+
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            const data = await fileService.delete()
+            const data = await fileService.delete(+req.params.id)
             res.json(data);
         } catch (e) {
             next(e)
@@ -23,7 +24,8 @@ class FilesController {
 
     async update(req: Request, res: Response, next: NextFunction) {
         try {
-            const data = await fileService.update()
+            const files = req['files']
+            const data = await fileService.update(+req.params.id, files)
             res.json(data);
         } catch (e) {
             next(e)
@@ -32,8 +34,8 @@ class FilesController {
 
     async download(req: Request, res: Response, next: NextFunction) {
         try {
-            const data = await fileService.download()
-            res.json(data);
+            const data = await fileService.download(+req.params.id)
+            res.download(data);
         } catch (e) {
             next(e)
         }
@@ -41,7 +43,7 @@ class FilesController {
 
     async fileInfo(req: Request, res: Response, next: NextFunction) {
         try {
-            const data = await fileService.fileInfo()
+            const data = await fileService.fileInfo(+req.params.id)
             res.json(data);
         } catch (e) {
             next(e)

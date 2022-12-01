@@ -36,14 +36,14 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
         const user = await userRepo.findOne({where: {id: userData.id}});
-        const tokens = tokenService.generateTokens({id:user.id});
+        const tokens = tokenService.generateTokens({id: user.id});
 
         await tokenService.saveToken(user.id, tokens.refreshToken);
         return {...tokens}
     }
 
     async signup(user: CreateUserDto) {
-        const isRegistered = await this.info(user.id);
+        const isRegistered = await userRepo.findOne({where: {id: user.id}})
         if (isRegistered) throw ApiError.BadRequest(`User with id ${user.id} already exists`)
         const hashPassword = await bcrypt.hash(user.password, 3);
         const userWithChangedPass = {...user, password: hashPassword}
